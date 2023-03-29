@@ -43,18 +43,20 @@ def init_user_random(class_list):
 
 def add_skill(skill, uuid):
     df = pd.read_csv("database.csv", index_col=False)
-    print(df['Skills'][df['UUID'] == uuid].values[0])
+    print(df['Skills'][df['UUID'] == uuid].loc[0])
 
     old_value_string = (df['Skills'][df['UUID'] == uuid].values[0])
-    current_value = ast.literal_eval(old_value_string)
-    print(current_value)
-    if skill in current_value:
-        if current_value[skill] >= 4:
-            pass
-        else:
-            current_value[skill] = current_value[skill] + 1
+    if not isinstance(old_value_string, str):
+        current_value = f'{{"{skill}": 1}}'
     else:
-        current_value.update({skill: 1})
+        current_value = ast.literal_eval(old_value_string)
+        if skill in current_value:
+            if current_value[skill] >= 4:
+                pass
+            else:
+                current_value[skill] = current_value[skill] + 1
+        else:
+            current_value.update({skill: 1})
     # Selects value in row where UUID column equals param
     # And the column is equal to skills, then assigns to
     # Current value
@@ -71,7 +73,7 @@ def add_skill(skill, uuid):
 if __name__ == "__main__":
     init_database()
     print("----------------------------")
-    init_user_exact("praseky", '{"laser cutting master": 3}', "cutmaster9000", "cutmaster9000v2", 2)#random.randint(1000000, 9999999))
+    init_user_exact("praseky", '', "cutmaster9000", "cutmaster9000v2", 2)#random.randint(1000000, 9999999))
     print("----------------------------")
     add_skill("annoying mr hawes professional", 2)
     add_skill("annoying mr hawes professional", 2)
