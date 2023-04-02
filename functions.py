@@ -2,16 +2,22 @@
 import pandas as pd
 import random
 import ast
-import time
-from threading import Thread
+
 # Creating Empty DataFrame and Storing it in variable df
+
 
 def init_database():
     df = pd.DataFrame(columns=['Names', 'Skills', 'Projects Completed', 'Projects In progress', 'UUID', 'YEAR'])
 
     # Printing Empty DataFrame For Debugging Purposes
-    print(df)
     df.to_csv("database.csv", index=False)
+
+
+def get_userdata(uuid):
+    df = pd.read_csv("database.csv", index_col=False)
+    index = df.UUID[df.UUID == uuid].index.tolist()[0]
+    row_object = df.loc[index].to_json()
+    return row_object
 
 
 def init_user_exact(name, competency, finished_projects, underway_projects, uuid, year):
@@ -46,7 +52,6 @@ def init_user_random(class_list, year):
 
 def add_skill(skill, uuid):
     df = pd.read_csv("database.csv", index_col=False)
-    print(df.to_string())
     try:
         old_value_string = (df['Skills'][df['UUID'] == uuid].values[0])
     except:
@@ -68,19 +73,15 @@ def add_skill(skill, uuid):
     # Current value
     """print(current_value)"""
     # Finds the index of the aforementioned row
-    print(uuid)
-    print(df.UUID)
     index = df.UUID[df.UUID == uuid].index.tolist()[0]
-    print(index)
     current_value_string = str(current_value)
     df.at[int(index), 'Skills'] = current_value_string
-    print(df.to_string())
     df.to_csv("database.csv", index=False)
+    return get_userdata(uuid)
 
 
 def add_project(project, uuid):
     df = pd.read_csv("database.csv", index_col=False)
-    print(df.to_string())
     try:
         old_value_string = (df['Projects Completed'][df['UUID'] == uuid].values[0])
     except:
@@ -98,19 +99,15 @@ def add_project(project, uuid):
     # Current value
     """print(current_value)"""
     # Finds the index of the aforementioned row
-    print(uuid)
-    print(df.UUID)
     index = df.UUID[df.UUID == uuid].index.tolist()[0]
-    print(index)
     current_value_string = str(current_value)
     df.at[int(index), 'Projects Completed'] = current_value_string
-    print(df.to_string())
+    return get_userdata(uuid)
     df.to_csv("database.csv", index=False)
 
 
 def add_project_progress(project, uuid):
     df = pd.read_csv("database.csv", index_col=False)
-    print(df.to_string())
     try:
         old_value_string = (df['Projects In Progress'][df['UUID'] == uuid].values[0])
     except:
@@ -128,11 +125,18 @@ def add_project_progress(project, uuid):
     # Current value
     """print(current_value)"""
     # Finds the index of the aforementioned row
-    print(uuid)
-    print(df.UUID)
     index = df.UUID[df.UUID == uuid].index.tolist()[0]
-    print(index)
     current_value_string = str(current_value)
     df.at[int(index), 'Projects In progress'] = current_value_string
-    print(df.to_string())
     df.to_csv("database.csv", index=False)
+
+
+if __name__ == "__main__":
+    init_database()
+    num = init_user_random(['Mark', 'James', 'Kill-la-kill', 'euphoria'], 9)
+    for item in num:
+        add_project('cake', item)
+        add_skill('kill-la-killing', item)
+        add_project_progress('cake-la-killing', item)
+    json = get_userdata(num[0])
+
