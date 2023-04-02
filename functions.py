@@ -15,8 +15,18 @@ def init_database():
 
 def get_userdata(uuid):
     df = pd.read_csv("database.csv", index_col=False)
-    index = df.UUID[df.UUID == uuid].index.tolist()[0]
-    row_object = df.loc[index].to_json()
+    list = df.UUID.values.tolist()
+    print(uuid)
+    print(list)
+    print(list[0])
+
+    if int(uuid) in list:
+        print("checkpoint")
+        index = df.UUID[df.UUID == int(uuid)].index.tolist()[0]
+        print(index)
+    else:
+        return 0
+    row_object = df.loc[index]
     return row_object
 
 
@@ -28,7 +38,6 @@ def init_user_exact(name, competency, finished_projects, underway_projects, uuid
 
     df = pd.read_csv("database.csv", index_col=False)
     df.loc[len(df)] = [name, competency, finished_projects, underway_projects, uuid, year]
-    print(df)
     df.to_csv("database.csv", index=False)
 
 
@@ -130,13 +139,4 @@ def add_project_progress(project, uuid):
     df.at[int(index), 'Projects In progress'] = current_value_string
     df.to_csv("database.csv", index=False)
 
-
-if __name__ == "__main__":
-    init_database()
-    num = init_user_random(['Mark', 'James', 'Kill-la-kill', 'euphoria'], 9)
-    for item in num:
-        add_project('cake', item)
-        add_skill('kill-la-killing', item)
-        add_project_progress('cake-la-killing', item)
-    json = get_userdata(num[0])
-
+print(get_userdata(2))
