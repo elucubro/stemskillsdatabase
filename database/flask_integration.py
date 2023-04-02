@@ -1,8 +1,9 @@
 
-from flask import Flask, render_template
+from flask import Flask
 from flask_restful import Resource, Api, reqparse
 import pandas as pd
-import functions as db
+from database import functions as db
+
 app = Flask(__name__)
 api = Api(app)
 
@@ -32,6 +33,7 @@ class RandomUser(Resource):
         data = pd.read_csv('database.csv')
         return {'data': data.to_dict()}, 200  # return data with 200 OK
     pass
+
 
 class UserData(Resource):
     def post(self):
