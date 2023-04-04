@@ -1,5 +1,8 @@
 from src import nfc
 import keyboard
+from database import functions as func
+
+
 # Initialize NFC tag
 
 
@@ -13,17 +16,34 @@ def read_uid():
     return int(string, 16)
 
 
-def free_labor(class_list):
+def free_labor(class_list, year):
     dictionary = {}
     for item in class_list:
         print("Press 'a' To Scan \n")
         keyboard.wait("a")
-        print("flag")
+        func.init_user_exact(item, '', '', '', read_uid(), year)
         dictionary[item] = read_uid()
         print(read_uid())
     return dictionary
 
 
-print(read_uid())
-print(free_labor(['Mark', 'James']))
+def json_request_from_uuid(): 
+    # sends json request for data which is returned with a 
+    # subsequent link to open
+    # e.g, 
+    '''
+    uuid = read_uuid() 
+    packet = 
+    {
+    "uuid": uuid
+    }
+    json_response = requests.send(packet)
+    # At this point it goes into a flask instance and turns into a web-page
+    return json_request
+
+    '''
+
+    pass
+
+print(free_labor(['Mark', 'James'], 7))
 

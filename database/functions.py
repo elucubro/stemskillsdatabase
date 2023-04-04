@@ -2,7 +2,6 @@
 import pandas as pd
 import random
 import ast
-
 # Creating Empty DataFrame and Storing it in variable df
 
 
@@ -10,7 +9,7 @@ def init_database():
     df = pd.DataFrame(columns=['Names', 'Skills', 'Projects Completed', 'Projects In progress', 'UUID', 'YEAR'])
 
     # Printing Empty DataFrame For Debugging Purposes
-    df.to_csv("database.csv", index=False)
+    df.to_csv("database/database.csv", index=False)
 
 
 def get_userdata(uuid):
@@ -38,7 +37,7 @@ def init_user_exact(name, competency, finished_projects, underway_projects, uuid
 
     df = pd.read_csv("database.csv", index_col=False)
     df.loc[len(df)] = [name, competency, finished_projects, underway_projects, uuid, year]
-    df.to_csv("database.csv", index=False)
+    df.to_csv("database/database.csv", index=False)
 
 
 def init_user_random(class_list, year):
@@ -51,8 +50,9 @@ def init_user_random(class_list, year):
         df.loc[len(df)] = [student, '', '', '', num, year]
         num_list.append(num)
     print(df.to_string())
-    df.to_csv("database.csv", index=False)
+    df.to_csv("database/database.csv", index=False)
     return num_list
+
 
 
         #print(num)
@@ -85,7 +85,7 @@ def add_skill(skill, uuid):
     index = df.UUID[df.UUID == uuid].index.tolist()[0]
     current_value_string = str(current_value)
     df.at[int(index), 'Skills'] = current_value_string
-    df.to_csv("database.csv", index=False)
+    df.to_csv("database/database.csv", index=False)
     return get_userdata(uuid)
 
 
@@ -111,8 +111,8 @@ def add_project(project, uuid):
     index = df.UUID[df.UUID == uuid].index.tolist()[0]
     current_value_string = str(current_value)
     df.at[int(index), 'Projects Completed'] = current_value_string
+    df.to_csv("database/database.csv", index=False)
     return get_userdata(uuid)
-    df.to_csv("database.csv", index=False)
 
 
 def add_project_progress(project, uuid):
@@ -137,6 +137,4 @@ def add_project_progress(project, uuid):
     index = df.UUID[df.UUID == uuid].index.tolist()[0]
     current_value_string = str(current_value)
     df.at[int(index), 'Projects In progress'] = current_value_string
-    df.to_csv("database.csv", index=False)
-
-print(get_userdata(1254412927))
+    df.to_csv("database/database.csv", index=False)
