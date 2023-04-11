@@ -1,7 +1,7 @@
 
 import flask
 import simplejson
-from flask import Flask, jsonify
+from flask import Flask
 from flask_cors import CORS
 from flask_restful import Resource, Api, reqparse
 import pandas as pd
@@ -53,8 +53,6 @@ class UserData(Resource):
         resp.headers['Access-Control-Allow-Origin'] = '*'
         resp.headers['Access-Control-Allow-Methods'] = 'POST'
         return resp
-
-
     pass
 
 
