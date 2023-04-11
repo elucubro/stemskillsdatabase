@@ -9,7 +9,7 @@ def init_database():
     df = pd.DataFrame(columns=['Names', 'Skills', 'Projects Completed', 'Projects In progress', 'UUID', 'YEAR'])
 
     # Printing Empty DataFrame For Debugging Purposes
-    df.to_csv("database/database.csv", index=False)
+    df.to_csv("database.csv", index=False)
 
 
 def get_userdata(uuid):
@@ -37,7 +37,7 @@ def init_user_exact(name, competency, finished_projects, underway_projects, uuid
 
     df = pd.read_csv("database.csv", index_col=False)
     df.loc[len(df)] = [name, competency, finished_projects, underway_projects, uuid, year]
-    df.to_csv("database/database.csv", index=False)
+    df.to_csv("database.csv", index=False)
 
 
 def init_user_random(class_list, year):
@@ -47,10 +47,10 @@ def init_user_random(class_list, year):
     for student in class_list:
         while num in df['UUID'].values:
             num = random.randint(1000000, 9999999)
-        df.loc[len(df)] = [student, '', '', '', num, year]
+        df.loc[len(df)] = [student, None, None, None, num, year]
         num_list.append(num)
     print(df.to_string())
-    df.to_csv("database/database.csv", index=False)
+    df.to_csv("database.csv", index=False)
     return num_list
 
 
@@ -138,3 +138,6 @@ def add_project_progress(project, uuid):
     current_value_string = str(current_value)
     df.at[int(index), 'Projects In progress'] = current_value_string
     df.to_csv("database/database.csv", index=False)
+
+if __name__ == "__main__":
+    init_user_random(["mark", "pedro", "year"], 9)

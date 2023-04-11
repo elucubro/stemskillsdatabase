@@ -1,12 +1,16 @@
 
-from flask import Flask
+import flask
+import simplejson
+from flask import Flask, jsonify
+from flask_cors import CORS
 from flask_restful import Resource, Api, reqparse
 import pandas as pd
 from database import functions as db
 
 app = Flask(__name__)
 api = Api(app)
-
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 # Importing Pandas to create DataFrame
 
 
@@ -45,7 +49,10 @@ class UserData(Resource):
         data = db.get_userdata(args['uuid'])
         print("checkpoint at line 34")
         data = data.to_dict()
-        return {'data': data}, 200
+        resp = flask.make_response(simplejson.dumps({'data': data}, ignore_nan=True), 200)
+        resp.headers['Access-Control-Allow-Origin'] = '*'
+        resp.headers['Access-Control-Allow-Methods'] = 'POST'
+        return resp
 
 
     pass

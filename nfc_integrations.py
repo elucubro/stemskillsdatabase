@@ -29,10 +29,12 @@ def free_labor(class_list, year):
 
 def json_request_from_uuid(): 
     # sends json request for data which is returned with a 
-    # subsequent link to open
-    # e.g, 
+    # subseque
+    # nt link to open
+    # e.g,
+    pass
     '''
-    uuid = read_uuid() 
+    # uuid = read_uuid() 
     packet = 
     {
     "uuid": uuid
@@ -40,10 +42,7 @@ def json_request_from_uuid():
     json_response = requests.send(packet)
     # At this point it goes into a flask instance and turns into a web-page
     return json_request
-
     '''
-
-    pass
 
 print(free_labor(['Mark', 'James'], 7))
 
