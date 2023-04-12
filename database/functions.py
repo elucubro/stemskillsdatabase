@@ -140,4 +140,4 @@ def add_project_progress(project, uuid):
     df.to_csv("database/database.csv", index=False)
 
 if __name__ == "__main__":
-    init_user_random(["mark", "pedro", "year"], 9)
+    print(get_userdata(1591797))

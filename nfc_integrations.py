@@ -43,6 +43,4 @@ def json_request_from_uuid():
     # At this point it goes into a flask instance and turns into a web-page
     return json_request
     '''
-
-print(free_labor(['Mark', 'James'], 7))
-
+read_uid()

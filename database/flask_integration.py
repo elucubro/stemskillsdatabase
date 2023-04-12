@@ -1,3 +1,4 @@
+import ast
 
 import flask
 import simplejson
@@ -49,6 +50,10 @@ class UserData(Resource):
         data = db.get_userdata(args['uuid'])
         print("checkpoint at line 34")
         data = data.to_dict()
+        print(data)
+        data["Skills"] = ast.literal_eval(data["Skills"])
+        data["Projects Completed"] = ast.literal_eval(data["Projects Completed"])
+        data["Projects In progress"] = ast.literal_eval(data["Projects In progress"])
         resp = flask.make_response(simplejson.dumps({'data': data}, ignore_nan=True), 200)
         resp.headers['Access-Control-Allow-Origin'] = '*'
         resp.headers['Access-Control-Allow-Methods'] = 'POST'
