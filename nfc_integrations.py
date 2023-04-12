@@ -1,7 +1,7 @@
 from src import nfc
 import keyboard
 from database import functions as func
-
+import webbrowser
 
 # Initialize NFC tag
 
@@ -43,4 +43,5 @@ def json_request_from_uuid():
     # At this point it goes into a flask instance and turns into a web-page
     return json_request
     '''
-read_uid()
+
+webbrowser.open(f'http://localhost:63343/website/index.html?uid={read_uid()}')
